@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.trs.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.trs.bean.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="passwordSalt" property="passwordsalt" jdbcType="VARCHAR" />
+    <result column="isDisabled" property="isdisabled" jdbcType="BIT" />
+    <result column="isDeleted" property="isdeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, password, passwordSalt, isDisabled, isDeleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_adminusers
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_adminusers
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.trs.bean.User" >
+    insert into t_adminusers (id, account, password, 
+      passwordSalt, isDisabled, isDeleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{passwordsalt,jdbcType=VARCHAR}, #{isdisabled,jdbcType=BIT}, #{isdeleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.trs.bean.User" >
+    insert into t_adminusers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="passwordsalt != null" >
+        passwordSalt,
+      </if>
+      <if test="isdisabled != null" >
+        isDisabled,
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordsalt != null" >
+        #{passwordsalt,jdbcType=VARCHAR},
+      </if>
+      <if test="isdisabled != null" >
+        #{isdisabled,jdbcType=BIT},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.trs.bean.User" >
+    update t_adminusers
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordsalt != null" >
+        passwordSalt = #{passwordsalt,jdbcType=VARCHAR},
+      </if>
+      <if test="isdisabled != null" >
+        isDisabled = #{isdisabled,jdbcType=BIT},
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted = #{isdeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.trs.bean.User" >
+    update t_adminusers
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      passwordSalt = #{passwordsalt,jdbcType=VARCHAR},
+      isDisabled = #{isdisabled,jdbcType=BIT},
+      isDeleted = #{isdeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findAll"  resultMap="BaseResultMap">
+    select * from t_adminusers
+  </select>
+</mapper>
